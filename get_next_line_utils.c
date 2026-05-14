@@ -6,15 +6,15 @@
 /*   By: falves-e <falves-e@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 12:29:16 by falves-e          #+#    #+#             */
-/*   Updated: 2026/05/13 20:43:59 by falves-e         ###   ########.fr       */
+/*   Updated: 2026/05/14 12:33:49 by falves-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	strlen(char *str)
+unsigned int	strlen(char *str)
 {
-	int len;
+	unsigned int len;
 
 	len = 0;
 	if (str == NULL)
@@ -24,9 +24,9 @@ int	strlen(char *str)
 	return (len);
 }
 
-int	nl_index(char *buffer)
+unsigned int	nl_index(char *buffer)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	while (buffer[i])
@@ -37,7 +37,10 @@ int	nl_index(char *buffer)
 	}
 	return (0);
 }
-
+void	rewrite_buffer(char *buffer, unsigned int i)
+{
+	
+}
 char	*join(char *line, char *buffer)
 {
 	int		len_line;
@@ -45,26 +48,25 @@ char	*join(char *line, char *buffer)
 	int		i;
 	
 	len_line = ft_strlen(line);
-	if (!*line)
-		str = malloc(sizeof(char) * (len_line + nl_index(buffer) + 2));
+	if (line == NULL)
+		str = malloc(sizeof(char) * (nl_index(buffer) + 2));
 	else
 		str = malloc(sizeof(char) * (len_line + ft_strlen(buffer) + 1));
 	if (str == NULL)
 		return (NULL);
 	i = 0;
-	while (line[i])
-	{
-		str[i] = line[i];
-		i++;
-	}
+	while (line[i++])
+		str[i - 1] = line[i - 1];
 	i = 0;
-	while (str[len_line + i - 1] && buffer[i])
+	while (buffer[i] && buffer[i] != '\n')
 	{
 		str[len_line + i] = buffer[i];
 		i++;
 	}
-	rewrite_buffer(buffer);	
-	return (str[len_line + i] = '\0', str);
+	if (buffer[i] == '\n')
+		str[len_line + i] = buffer[i];
+	rewrite_buffer(buffer, i);	
+	return (free(line), str[len_line + i] = '\0', str);
 }
 
 char	*handle_error(void?)

@@ -6,7 +6,7 @@
 /*   By: falves-e <falves-e@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 12:29:14 by falves-e          #+#    #+#             */
-/*   Updated: 2026/05/13 20:42:30 by falves-e         ###   ########.fr       */
+/*   Updated: 2026/05/14 12:32:05 by falves-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE + 1];
-	int			b_read;
-	char		*line;
+	static char		buffer[BUFFER_SIZE + 1];
+	unsigned int	b_read;
+	char			*line;
 
 	buffer[BUFFER_SIZE] = '\0';
 	line = NULL;
@@ -29,7 +29,10 @@ char	*get_next_line(int fd)
 		line = join(line, buffer);
 		b_read = read(fd, buffer, BUFFER_SIZE);
 		if (b_read == 0)
-			return (buffer);	
+			return (line);
+
+
+		return (line)
 	}
 	if (b_read < 0)
 		return (handle_error());
