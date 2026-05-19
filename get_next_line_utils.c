@@ -6,7 +6,7 @@
 /*   By: falves-e <falves-e@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 12:29:16 by falves-e          #+#    #+#             */
-/*   Updated: 2026/05/14 16:08:08 by falves-e         ###   ########.fr       */
+/*   Updated: 2026/05/19 18:42:40 by falves-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,16 @@ unsigned int	nl_index(char *buffer)
 	return (0);
 }
 
-void	rewrite_buffer(char *buffer, unsigned int i)
+void	rewrite_buffer(char *buffer)
 {
 	unsigned int	j;
+	unsigned int	i;
 
 	j = 0;
-	if (buffer[i] == '\n')
+	i = nl_index(buffer);
+	if (i)
 	{
-		while (buffer[i + j] && j <= i)
+		while (buffer[i] && buffer[i + j])
 		{
 			buffer[j] = buffer[i + j];
 			j++;
@@ -78,8 +80,8 @@ char	*join(char *line, char *buffer)
 		str[i++] = buffer[j++];
 	if (buffer[j] == '\n')
 		str[i] = '\n';
-	str[i + 1] = '\0';
-	rewrite_buffer(buffer, i);
+	str[i + (buffer[j] == '\n')] = '\0';
+	rewrite_buffer(buffer);
 	free(line);
 	return (str);
 }
@@ -92,9 +94,11 @@ char	*handle_error(char *line)
 /* int main(void)
 {
 	char line[] = "hello ";
-	char buffer[] = "world";
+	char buffer[] = "Hello\nworld";
 
-	printf("join output = %s\n", join(line, buffer));
+	//printf("join output = %s\n", join(line, buffer));
+	printf("buffer before = %s\n", buffer);
+	rewrite_buffer(buffer);
+	printf("buffer after = %s\n", buffer);
 	return 0;
-}
- */
+} */

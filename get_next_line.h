@@ -6,7 +6,7 @@
 /*   By: falves-e <falves-e@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 12:29:11 by falves-e          #+#    #+#             */
-/*   Updated: 2026/05/14 15:29:19 by falves-e         ###   ########.fr       */
+/*   Updated: 2026/05/19 18:25:24 by falves-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ unsigned int	nl_index(char *buffer);
 unsigned int	ft_strlen(char *str);
 char			*join(char *line, char *buffer);
 char			*handle_error(char *line);
-void			rewrite_buffer(char *buffer, unsigned int i);
+void			rewrite_buffer(char *buffer);
 
 #endif
