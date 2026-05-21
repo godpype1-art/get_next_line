@@ -6,7 +6,7 @@
 /*   By: falves-e <falves-e@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 12:29:14 by falves-e          #+#    #+#             */
-/*   Updated: 2026/05/19 18:51:13 by falves-e         ###   ########.fr       */
+/*   Updated: 2026/05/21 20:23:44 by falves-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,47 @@
 char	*get_next_line(int fd)
 {
 	static char	buffer[BUFFER_SIZE + 1];
-	ssize_t		b_read;
+	ssize_t		bytes_read;
 	char		*line;
 
-	buffer[BUFFER_SIZE] = '\0';
 	line = NULL;
-	b_read = 1;
-	if (!*buffer)
-		b_read = read(fd, buffer, BUFFER_SIZE);
-	while (b_read > 0)
+	bytes_read = 1;
+	if (!buffer[0])
 	{
-		if (nl_index(buffer))
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read > 0)
+			buffer[bytes_read] = '\0';
+	}
+	while (bytes_read > 0)
+	{
+		if (nl_pos(buffer) != 0)
 			return (join(line, buffer));
 		line = join(line, buffer);
 		if (line == NULL)
 			return (NULL);
-		b_read = read(fd, buffer, BUFFER_SIZE);
-		if (b_read == 0)
-			return (line);
-		else if (b_read < 0)
-			return (handle_error(line));
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read <= 0)
+			return (handle_error(line, bytes_read));
+		buffer[bytes_read] = '\0';
 	}
 	return (NULL);
 }
+
+/* #include <fcntl.h>
+#include <stdio.h>
+#include "test.txt"
+
+int main(void)
+{
+    int     fd;
+    char    *line;
+
+    fd = open("test.txt", O_RDONLY);
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        printf("%s", line);
+        free(line);
+    }
+    close(fd);
+    return (0);
+} */

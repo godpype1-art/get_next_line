@@ -6,7 +6,7 @@
 /*   By: falves-e <falves-e@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 12:29:16 by falves-e          #+#    #+#             */
-/*   Updated: 2026/05/19 18:42:40 by falves-e         ###   ########.fr       */
+/*   Updated: 2026/05/21 20:24:07 by falves-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ unsigned int	ft_strlen(char *str)
 	return (len);
 }
 
-unsigned int	nl_index(char *buffer)
+unsigned int	nl_pos(char *buffer)
 {
 	unsigned int	i;
 
 	i = 0;
-	while (buffer[i])
+	while (buffer[i] != '\0')
 	{
 		if (buffer[i++] == '\n')
 			return (i);
@@ -41,10 +41,10 @@ void	rewrite_buffer(char *buffer)
 	unsigned int	i;
 
 	j = 0;
-	i = nl_index(buffer);
-	if (i)
+	i = nl_pos(buffer);
+	if (i != 0)
 	{
-		while (buffer[i] && buffer[i + j])
+		while (buffer[i + j] != '\0')
 		{
 			buffer[j] = buffer[i + j];
 			j++;
@@ -65,8 +65,8 @@ char	*join(char *line, char *buffer)
 	int		j;
 
 	len_line = ft_strlen(line);
-	if (nl_index(buffer))
-		str = malloc(sizeof(char) * (len_line + nl_index(buffer) + 1));
+	if (nl_pos(buffer) > 0)
+		str = malloc(sizeof(char) * (len_line + nl_pos(buffer) + 1));
 	else
 		str = malloc(sizeof(char) * (len_line + ft_strlen(buffer) + 1));
 	if (str == NULL)
@@ -86,15 +86,18 @@ char	*join(char *line, char *buffer)
 	return (str);
 }
 
-char	*handle_error(char *line)
+char	*handle_error(char *line, ssize_t bytes_read)
 {
-	free(line);
+	if (bytes_read == 0)
+		return (line);
+	else if (bytes_read < 0)
+		free(line);
 	return (NULL);
 }
 /* int main(void)
 {
-	char line[] = "hello ";
-	char buffer[] = "Hello\nworld";
+	//char line[] = "hello ";
+	char buffer[] = "Hello worlds\n";
 
 	//printf("join output = %s\n", join(line, buffer));
 	printf("buffer before = %s\n", buffer);

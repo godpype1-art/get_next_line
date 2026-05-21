@@ -6,7 +6,7 @@
 /*   By: falves-e <falves-e@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 12:29:11 by falves-e          #+#    #+#             */
-/*   Updated: 2026/05/19 18:25:24 by falves-e         ###   ########.fr       */
+/*   Updated: 2026/05/21 18:53:07 by falves-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 # include <stdio.h>
 
 char			*get_next_line(int fd);
-unsigned int	nl_index(char *buffer);
+unsigned int	nl_pos(char *buffer);
 unsigned int	ft_strlen(char *str);
 char			*join(char *line, char *buffer);
-char			*handle_error(char *line);
+char			*handle_error(char *line, ssize_t bytes_read);
 void			rewrite_buffer(char *buffer);
 
 #endif
