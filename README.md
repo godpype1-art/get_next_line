@@ -107,6 +107,8 @@ required careful buffer and allocation management to avoid memory leaks and unde
 
 - Francinette tester
 
+- Personal tests
+
 ### AI Usage
 
 - README structure refinement
